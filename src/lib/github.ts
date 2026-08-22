@@ -20,8 +20,16 @@ const FALLBACK: Record<string, RepoStats> = {
  */
 export async function getRepoStats(repo: string): Promise<RepoStats> {
 	try {
+		const headers: HeadersInit = { Accept: 'application/vnd.github+json' };
+		/* Unauthenticated requests are capped at 60/hour per IP, which a CI
+		 * runner can burn through fast. GITHUB_TOKEN is set automatically in
+		 * the deploy workflow and raises that to 5000/hour. */
+		if (process.env.GITHUB_TOKEN) {
+			headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+		}
+
 		const res = await fetch(`https://api.github.com/repos/${repo}`, {
-			headers: { Accept: 'application/vnd.github+json' },
+			headers,
 		});
 
 		if (!res.ok) {
