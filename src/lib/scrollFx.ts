@@ -58,7 +58,9 @@ export function initScrollReveal(): void {
 
 /** Highlights the nav link matching whichever section is currently in view. */
 export function initActiveNav(): void {
-	const sections = document.querySelectorAll<HTMLElement>('.section[id]');
+	/* #top (the hero) isn't a .section, but it still needs to be observed
+	 * so the nav clears back to nothing highlighted while it's in view. */
+	const sections = document.querySelectorAll<HTMLElement>('.section[id], #top');
 	const navLinks =
 		document.querySelectorAll<HTMLAnchorElement>('.nav a[href*="#"]');
 	if (!sections.length || !navLinks.length) return;
