@@ -1,0 +1,95 @@
+---
+const timeline = [
+	{
+		when: '2023-2026',
+		what: 'Bachelor’s in Programming',
+		where: 'NTNU, Gjøvik',
+		detail:
+			'Computer science fundamentals through a systems & software-development lens.',
+	},
+	{
+		when: '2019-2021',
+		what: 'IT Consultant',
+		where: 'SÅTE IKT, Rena',
+		detail:
+			'User support & maintenance, network infrastructure development, and in-house tooling.',
+	},
+	{
+		when: '2016-2019',
+		what: 'Trade certificate in Computer Electronics',
+		where: 'Hamar Katedralskole',
+		detail:
+			'Vocational computer electronics program, completed with a passed trade exam.',
+	},
+];
+---
+
+<section class="section" id="experience">
+	<div class="section-inner">
+		<h2>
+			<span class="prompt">&gt;</span>experience<span
+				class="cursor"
+				aria-hidden="true"></span>
+		</h2>
+		<ol class="timeline">
+			{
+				timeline.map((entry) => (
+					<li class="panel entry lift" data-reveal>
+						<span class="when">{entry.when}</span>
+						<div class="what-where">
+							<h3>{entry.what}</h3>
+							<p class="where">{entry.where}</p>
+							<p class="detail">{entry.detail}</p>
+						</div>
+					</li>
+				))
+			}
+		</ol>
+	</div>
+</section>
+
+<style>
+	.timeline {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.entry {
+		display: grid;
+		grid-template-columns: 8rem 1fr;
+		gap: 1rem;
+		padding: 1.25rem 1.5rem;
+	}
+
+	.when {
+		color: var(--accent);
+		font-size: 0.85rem;
+		white-space: nowrap;
+	}
+
+	.what-where h3 {
+		margin: 0 0 0.15rem;
+		font-size: 1.05rem;
+	}
+
+	.where {
+		margin: 0 0 0.4rem;
+		color: var(--fg-faint);
+		font-size: 0.85rem;
+	}
+
+	.detail {
+		margin: 0;
+	}
+
+	@media (max-width: 30rem) {
+		.entry {
+			grid-template-columns: 1fr;
+			gap: 0.35rem;
+		}
+	}
+</style>

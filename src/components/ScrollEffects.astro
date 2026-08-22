@@ -1,0 +1,18 @@
+---
+// No markup, just wires up scroll-driven reveal and nav-highlight behavior.
+---
+
+<script>
+	import { initScrollReveal, initActiveNav } from '../lib/scrollFx';
+
+	const start = () => {
+		initScrollReveal();
+		initActiveNav();
+	};
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', start);
+	} else {
+		start();
+	}
+</script>

@@ -1,0 +1,64 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="section" id="contact">
+	<div class="section-inner">
+		<h2>
+			<span class="prompt">&gt;</span>contact<span
+				class="cursor"
+				aria-hidden="true"></span>
+		</h2>
+		<div class="panel copy" data-reveal>
+			<p>
+				Open to interesting problems, collaborations, or just talking shop.
+				Reach out:
+			</p>
+			<div class="links">
+				<a class="btn btn-primary" href="mailto:eirik@dalseggteppen.no"
+					>eirik@dalseggteppen.no</a
+				>
+				<a
+					class="btn"
+					href="https://github.com/Tapawingo"
+					target="_blank"
+					rel="noreferrer">GitHub</a
+				>
+				<a
+					class="btn"
+					href="https://www.linkedin.com/in/eirik-dalsegg-teppen-608019206/"
+					target="_blank"
+					rel="noreferrer">LinkedIn</a
+				>
+			</div>
+		</div>
+		<p class="copyright">
+			Eirik Dalsegg Teppen &copy; {year} &middot;
+			<a
+				href="https://github.com/Tapawingo/tapawingo.github.io"
+				target="_blank"
+				rel="noreferrer">View Source</a
+			>
+		</p>
+	</div>
+</footer>
+
+<style>
+	.copy {
+		padding: clamp(1.25rem, 4vw, 2rem);
+		margin-bottom: 1.5rem;
+	}
+
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 1rem;
+	}
+
+	.copyright {
+		font-size: 0.8rem;
+		color: var(--fg-faint);
+		text-align: center;
+	}
+</style>

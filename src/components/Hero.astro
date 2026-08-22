@@ -1,0 +1,80 @@
+---
+
+---
+
+<section class="hero" id="top">
+	<div class="hero-inner panel" data-reveal>
+		<span class="eyebrow"
+			>whoami<span class="cursor" aria-hidden="true"></span></span
+		>
+		<h1 class="glitch">Eirik Dalsegg Teppen</h1>
+		<p class="role glow-pulse">Software Developer</p>
+		<p class="pitch">
+			I've been writing code since I was 13, everything from bare-metal x86
+			assembly and OpenGL to web apps. Finished a Bachelor's in Programming at
+			NTNU in 2026, and ship side projects, like a Qt6 desktop mod manager and a
+			shader-based plasma renderer, in the gaps between.
+		</p>
+		<div class="cta">
+			<a
+				class="btn btn-primary"
+				href="https://github.com/Tapawingo"
+				target="_blank"
+				rel="noreferrer">GitHub</a
+			>
+			<a
+				class="btn"
+				href="https://www.linkedin.com/in/eirik-dalsegg-teppen-608019206/"
+				target="_blank"
+				rel="noreferrer">LinkedIn</a
+			>
+			<a class="btn" href="mailto:eirik@dalseggteppen.no">Email</a>
+		</div>
+	</div>
+</section>
+
+<style>
+	.hero {
+		min-height: calc(100svh - 3.5rem);
+		display: flex;
+		align-items: center;
+		padding: 1.5rem;
+	}
+
+	/* Matches Nav.astro's mobile height (it stacks to 3 rows below 30rem,
+	   ~7.5rem tall vs. ~3.5rem normally) so the hero still fills exactly
+	   one viewport instead of overflowing an extra few rem below the fold. */
+	@media (max-width: 30rem) {
+		.hero {
+			min-height: calc(100svh - 7.5rem);
+		}
+	}
+
+	.hero-inner {
+		max-width: var(--content-width);
+		margin: 0 auto;
+		padding: clamp(1.75rem, 5vw, 3rem);
+	}
+
+	h1 {
+		font-size: clamp(2rem, 5vw, 3.25rem);
+	}
+
+	.role {
+		color: var(--accent);
+		font-size: clamp(1rem, 2vw, 1.25rem);
+		margin-bottom: 1.25rem;
+	}
+
+	.pitch {
+		max-width: 42rem;
+		font-size: 1rem;
+	}
+
+	.cta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 1.5rem;
+	}
+</style>

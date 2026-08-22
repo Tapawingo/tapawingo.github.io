@@ -1,0 +1,46 @@
+---
+// Computed at build time, same pattern as the copyright year in Footer.astro.
+const birthDate = new Date(2000, 5, 27); // June 27, 2000
+const today = new Date();
+let age = today.getFullYear() - birthDate.getFullYear();
+const hadBirthdayThisYear =
+	today.getMonth() > birthDate.getMonth() ||
+	(today.getMonth() === birthDate.getMonth() &&
+		today.getDate() >= birthDate.getDate());
+if (!hadBirthdayThisYear) age--;
+---
+
+<section class="section" id="about">
+	<div class="section-inner">
+		<h2>
+			<span class="prompt">&gt;</span>about<span
+				class="cursor"
+				aria-hidden="true"></span>
+		</h2>
+		<div class="panel copy" data-reveal>
+			<p>
+				Software developer is the label I'd reach for first, even though my path
+				to it wasn't a straight line: electronics trade school, a couple of
+				jobs, then a CS degree. Web is one of several things I dabble in,
+				alongside systems and graphics work, so I'm about as comfortable in a
+				shader or a memory-mapped register as I am in a Vue component.
+			</p>
+			<p>
+				I'm {age}, Norwegian, and finished a Bachelor's in Programming at NTNU
+				(Gjøvik) in 2026. Before that I worked as an IT consultant doing user
+				support and network infrastructure. Outside of code: hiking (backpacking
+				and wild-camping), militaria collecting, airsoft, and video games.
+			</p>
+		</div>
+	</div>
+</section>
+
+<style>
+	.copy {
+		padding: clamp(1.25rem, 4vw, 2rem);
+	}
+
+	.copy p:last-child {
+		margin-bottom: 0;
+	}
+</style>

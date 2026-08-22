@@ -1,0 +1,95 @@
+---
+const groups = [
+	{
+		title: 'Languages',
+		items: [
+			'TypeScript',
+			'JavaScript',
+			'C++',
+			'C',
+			'Rust',
+			'Go',
+			'Python',
+			'Kotlin / Java',
+			'x86 Assembly',
+			'HTML',
+			'CSS / SASS',
+			'PHP',
+			'Lua',
+		],
+	},
+	{
+		title: 'Frameworks & runtime',
+		items: [
+			'Vue.js',
+			'Nuxt.js',
+			'React.js',
+			'Node.js',
+			'Express.js',
+			'Discord.js',
+			'Tailwind CSS',
+			'Astro',
+		],
+	},
+	{
+		title: 'Systems & graphics',
+		items: [
+			'Qt6',
+			'OpenGL',
+			'DirectX12',
+			'Vulkan',
+			'Dear ImGui',
+			'Unreal Engine',
+			'Godot',
+			'Arduino',
+			'Raspberry Pi',
+		],
+	},
+	{
+		title: 'Tools & platforms',
+		items: ['Git', 'Linux', 'Windows', 'MySQL', 'MongoDB', 'SQLite', 'GIMP'],
+	},
+];
+---
+
+<section class="section" id="skills">
+	<div class="section-inner">
+		<h2>
+			<span class="prompt">&gt;</span>skills<span
+				class="cursor"
+				aria-hidden="true"></span>
+		</h2>
+		<div class="grid">
+			{
+				groups.map((group) => (
+					<div class="panel group lift" data-reveal>
+						<h3>{group.title}</h3>
+						<ul class="tag-list">
+							{group.items.map((item) => (
+								<li class="tag">{item}</li>
+							))}
+						</ul>
+					</div>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+		gap: 1rem;
+	}
+
+	.group {
+		padding: 1.25rem;
+	}
+
+	h3 {
+		font-size: 0.95rem;
+		color: var(--accent);
+		margin-bottom: 0.9rem;
+	}
+</style>

@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = '404 - Eirik D.Teppen';
+const description = 'Page not found.';
+---
+
+<BaseLayout title={title} description={description} noindex>
+	<section class="section not-found">
+		<div class="section-inner panel not-found-inner">
+			<span class="eyebrow"
+				>error<span class="cursor" aria-hidden="true"></span></span
+			>
+			<h1 class="glitch">404</h1>
+			<p class="pitch">
+				bash: /{Astro.url.pathname.replace(/^\//, '')}: No such file or
+				directory
+			</p>
+			<div class="cta">
+				<a class="btn btn-primary" href="/#top">cd ~</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.not-found {
+		min-height: calc(100svh - 3.5rem);
+		display: flex;
+		align-items: center;
+		padding: 1.5rem;
+	}
+
+	@media (max-width: 30rem) {
+		.not-found {
+			min-height: calc(100svh - 7.5rem);
+		}
+	}
+
+	.not-found-inner {
+		max-width: var(--content-width);
+		margin: 0 auto;
+		padding: clamp(1.75rem, 5vw, 3rem);
+	}
+
+	h1 {
+		font-size: clamp(2.5rem, 8vw, 4.5rem);
+		color: var(--accent);
+	}
+
+	.pitch {
+		font-family: var(--font-mono);
+		font-size: 0.95rem;
+	}
+
+	.cta {
+		margin-top: 1.5rem;
+	}
+</style>

@@ -1,0 +1,8 @@
+dist/
+.astro/
+node_modules/
+
+# prettier-plugin-astro can't parse a <script> nested inside a JS
+# conditional expression ({import.meta.env.DEV && <script>...}) - it's
+# valid Astro and compiles fine, the formatter just chokes on it.
+src/components/PerfOverlay.astro

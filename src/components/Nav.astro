@@ -1,0 +1,118 @@
+---
+/* Root-relative so these still work from other pages, like 404.astro. */
+const links = [
+	{ href: '/#about', label: 'about' },
+	{ href: '/#skills', label: 'skills' },
+	{ href: '/#projects', label: 'projects' },
+	{ href: '/#experience', label: 'experience' },
+	{ href: '/#contact', label: 'contact' },
+];
+---
+
+<header class="nav">
+	<a class="brand" href="/#top">~/eirik$</a>
+	<nav>
+		<ul>
+			{
+				links.map((link) => (
+					<li>
+						<a href={link.href}>{link.label}</a>
+					</li>
+				))
+			}
+		</ul>
+	</nav>
+</header>
+
+<style>
+	.nav {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.9rem 1.5rem;
+		background: rgba(6, 9, 7, 0.75);
+		border-bottom: 1px solid var(--border-faint);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+	}
+
+	.brand {
+		font-weight: 700;
+		color: var(--accent);
+		border-bottom: none;
+		white-space: nowrap;
+	}
+
+	.brand:hover,
+	.brand:focus-visible {
+		color: var(--accent-strong);
+	}
+
+	ul {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.25rem;
+		margin: 0;
+		padding: 0;
+	}
+
+	nav a {
+		position: relative;
+		font-size: 0.9rem;
+		color: var(--fg-dim);
+		border-bottom: none;
+		padding-bottom: 3px;
+		transition: color 0.2s ease;
+	}
+
+	nav a:hover,
+	nav a:focus-visible,
+	nav a.active {
+		color: var(--accent-strong);
+	}
+
+	nav a::before {
+		content: '/';
+		color: var(--fg-faint);
+		margin-right: 1px;
+	}
+
+	nav a::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 1px;
+		background: var(--accent);
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 0.25s ease;
+	}
+
+	nav a:hover::after,
+	nav a:focus-visible::after,
+	nav a.active::after {
+		transform: scaleX(1);
+	}
+
+	@media (max-width: 30rem) {
+		.nav {
+			/* Row layout fought the brand for space against 5 wrapped links,
+			   so stack them into their own full-width rows instead. */
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.6rem;
+			padding: 0.75rem 1rem;
+		}
+
+		ul {
+			gap: 0.6rem 1rem;
+		}
+	}
+</style>

@@ -1,0 +1,107 @@
+---
+/* Fixed full-viewport animated backdrop, built on retro-plasma (src/lib/retroPlasma.ts). */
+---
+
+<div class="plasma-wrap" aria-hidden="true">
+	<canvas id="plasma-canvas"></canvas>
+	<div class="scanlines"></div>
+	<div class="vignette"></div>
+</div>
+
+<style>
+	.plasma-wrap {
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+		overflow: hidden;
+		background: var(--bg);
+	}
+
+	#plasma-canvas {
+		width: 100%;
+		height: 100%;
+		opacity: 0.55;
+	}
+
+	.scanlines {
+		position: absolute;
+		inset: 0;
+		background: repeating-linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0.18) 0px,
+			rgba(0, 0, 0, 0.18) 1px,
+			transparent 1px,
+			transparent 3px
+		);
+		mix-blend-mode: multiply;
+		pointer-events: none;
+	}
+
+	.vignette {
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(
+			ellipse at center,
+			transparent 40%,
+			var(--bg) 100%
+		);
+		pointer-events: none;
+	}
+</style>
+
+<script>
+	import { createRetroPlasma } from '../lib/retroPlasma';
+
+	const canvas = document.getElementById(
+		'plasma-canvas',
+	) as HTMLCanvasElement | null;
+
+	if (canvas) {
+		try {
+			/* Runs on the GPU now, so no need for a coarse pixelScale to keep it cheap. */
+			const plasma = createRetroPlasma(canvas, {
+				baseHue: 143,
+				hueRange: 0,
+				saturation: 1.0,
+				lightness: 0.2,
+				speed: 0.1,
+				pixelScale: 2.0,
+				plasmaScale: 0.5,
+				blobThreshold: 0.25,
+				blobSoftness: 2.5,
+				intensity: 0.7,
+				hueShiftEnabled: false,
+				hueShiftSpeed: 20,
+				dither: {
+					enabled: true,
+					levels: 6,
+					strength: 1.0,
+				},
+			});
+
+			const reduceMotion = window.matchMedia(
+				'(prefers-reduced-motion: reduce)',
+			);
+
+			const applyMotionPreference = (matches: boolean) => {
+				if (matches) {
+					plasma.stop();
+					plasma.renderStaticFrame();
+				} else {
+					plasma.start();
+				}
+			};
+
+			applyMotionPreference(reduceMotion.matches);
+			reduceMotion.addEventListener('change', (e) =>
+				applyMotionPreference(e.matches),
+			);
+		} catch (err) {
+			/* No WebGL support: leave the canvas empty, the scanlines/vignette still look fine. */
+			console.warn(
+				'[PlasmaBackground] WebGL unavailable, skipping plasma render:',
+				err,
+			);
+		}
+	}
+</script>

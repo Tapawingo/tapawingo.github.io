@@ -1,0 +1,368 @@
+:root {
+	--bg: #060907;
+	--bg-panel: rgba(9, 16, 12, 0.86);
+	--bg-panel-solid: #0a120d;
+	--fg: #d7f5e2;
+	--fg-dim: #7fa896;
+	--fg-faint: #4d6b5e;
+
+	--accent: #3ddc84;
+	--accent-strong: #6bffb0;
+	--accent-amber: #ffb454;
+
+	--border: rgba(61, 220, 132, 0.28);
+	--border-faint: rgba(61, 220, 132, 0.14);
+
+	--font-mono:
+		'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+	--content-width: 56rem;
+	--space-section: clamp(4rem, 9vw, 7rem);
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	color-scheme: dark;
+	/* Lenis (LenisScroll.astro) owns scroll smoothing now, so native CSS
+	   smoothing stays off to avoid doubling up with its own scrollTo. */
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	background: var(--bg);
+	color: var(--fg);
+	font-family: var(--font-mono);
+	font-size: 16px;
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+	font-family: var(--font-mono);
+	font-weight: 700;
+	line-height: 1.2;
+	margin: 0 0 0.75em;
+	color: var(--fg);
+}
+
+h2 {
+	font-size: clamp(1.5rem, 3vw, 2rem);
+	text-transform: lowercase;
+	letter-spacing: 0.02em;
+}
+
+h2 .prompt {
+	color: var(--accent);
+	margin-right: 0.5ch;
+}
+
+p {
+	margin: 0 0 1em;
+	color: var(--fg-dim);
+}
+
+a {
+	color: var(--accent-strong);
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	transition:
+		border-color 0.15s ease,
+		color 0.15s ease;
+}
+
+a:hover,
+a:focus-visible {
+	color: var(--accent);
+	border-bottom-color: currentColor;
+}
+
+a:focus-visible,
+button:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 3px;
+}
+
+::selection {
+	background: var(--accent);
+	color: #04140a;
+}
+
+.section {
+	position: relative;
+	width: 100%;
+	padding: var(--space-section) 1.5rem;
+	scroll-margin-top: 4.5rem;
+}
+
+/* Nav.astro stacks to 3 rows below 30rem, so this needs to grow to match
+   or anchor jumps land with the heading partly hidden under the nav. */
+@media (max-width: 30rem) {
+	.section {
+		scroll-margin-top: 8rem;
+	}
+}
+
+.section-inner {
+	max-width: var(--content-width);
+	margin: 0 auto;
+}
+
+.panel {
+	background: var(--bg-panel);
+	border: 1px solid var(--border-faint);
+	border-radius: 4px;
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+}
+
+.eyebrow {
+	display: block;
+	font-size: 0.8rem;
+	color: var(--fg-faint);
+	letter-spacing: 0.08em;
+	margin-bottom: 0.5rem;
+}
+
+.eyebrow::before {
+	content: '// ';
+	color: var(--accent);
+}
+
+.tag-list {
+	list-style: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+}
+
+.tag {
+	font-size: 0.8rem;
+	color: var(--fg-dim);
+	border: 1px solid var(--border);
+	border-radius: 3px;
+	padding: 0.25rem 0.6rem;
+	background: rgba(61, 220, 132, 0.05);
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease,
+		color 0.15s ease,
+		transform 0.15s ease;
+}
+
+.tag-list .tag:hover {
+	background: rgba(61, 220, 132, 0.14);
+	border-color: var(--accent);
+	color: var(--fg);
+	transform: translateY(-1px);
+}
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5ch;
+	font-family: var(--font-mono);
+	font-size: 0.9rem;
+	padding: 0.6rem 1.1rem;
+	border: 1px solid var(--border);
+	border-radius: 3px;
+	color: var(--fg);
+	background: rgba(61, 220, 132, 0.06);
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease,
+		color 0.15s ease;
+}
+
+.btn:hover,
+.btn:focus-visible {
+	background: rgba(61, 220, 132, 0.14);
+	border-color: var(--accent);
+	color: var(--accent-strong);
+}
+
+.btn.btn-primary {
+	background: var(--accent);
+	color: #04140a;
+	border-color: var(--accent);
+}
+
+.btn.btn-primary:hover,
+.btn.btn-primary:focus-visible {
+	background: var(--accent-strong);
+	border-color: var(--accent-strong);
+	color: #04140a;
+}
+
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* ---- Motion ---- */
+
+/*
+ * [data-reveal] and .lift can land on the same element and both want to
+ * move it via `transform`, which would just clobber each other if set
+ * directly. Composing through custom properties lets scroll offset and
+ * hover-lift coexist: each side only touches its own variable.
+ */
+@media (prefers-reduced-motion: no-preference) {
+	[data-reveal],
+	.lift {
+		--reveal-y: 0px;
+		--hover-y: 0px;
+		transform: translate3d(0, calc(var(--reveal-y) + var(--hover-y)), 0);
+	}
+
+	/* Gated on .js (set by BaseLayout before first paint) so content
+	   defaults to visible if JS fails to load or run. */
+	.js [data-reveal] {
+		opacity: 0;
+		will-change: opacity, transform;
+	}
+}
+
+/* box-shadow is left out of this transition since animating it repaints
+   every frame; snapping it on/off keeps the hover cheap. */
+.lift {
+	transition:
+		transform 0.25s ease,
+		border-color 0.25s ease;
+}
+
+.lift:hover,
+.lift:focus-within {
+	--hover-y: -4px;
+	border-color: var(--accent);
+	box-shadow: 0 12px 28px -14px rgba(61, 220, 132, 0.5);
+}
+
+/* Shine sweep on buttons */
+.btn {
+	position: relative;
+	overflow: hidden;
+}
+
+.btn::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		115deg,
+		transparent 30%,
+		rgba(255, 255, 255, 0.16) 50%,
+		transparent 70%
+	);
+	transform: translateX(-130%);
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.btn::before {
+		transition: transform 0.6s ease;
+	}
+
+	.btn:hover::before,
+	.btn:focus-visible::before {
+		transform: translateX(130%);
+	}
+}
+
+/* Blinking terminal cursor, used after section headings */
+.cursor {
+	display: inline-block;
+	width: 0.5ch;
+	height: 1em;
+	margin-left: 0.2ch;
+	background: var(--accent);
+	vertical-align: -0.15em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.cursor {
+		animation: blink 1.1s steps(1) infinite;
+	}
+}
+
+@keyframes blink {
+	0%,
+	49% {
+		opacity: 1;
+	}
+	50%,
+	100% {
+		opacity: 0;
+	}
+}
+
+/* Hero title glitch-in */
+@keyframes glitch-in {
+	0% {
+		opacity: 0;
+		transform: translate3d(-6px, 0, 0);
+		text-shadow:
+			2px 0 var(--accent-amber),
+			-2px 0 var(--accent);
+	}
+	20% {
+		opacity: 1;
+		transform: translate3d(3px, 0, 0);
+	}
+	40% {
+		transform: translate3d(-2px, 0, 0);
+		text-shadow:
+			-2px 0 var(--accent-amber),
+			2px 0 var(--accent);
+	}
+	60% {
+		transform: translate3d(1px, 0, 0);
+		text-shadow:
+			1px 0 var(--accent-amber),
+			-1px 0 var(--accent);
+	}
+	100% {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+		text-shadow: none;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.glitch {
+		animation: glitch-in 0.7s steps(3, end) both;
+	}
+}
+
+/* Gentle glow pulse for accent text */
+@keyframes glow-pulse {
+	0%,
+	100% {
+		text-shadow: 0 0 8px rgba(61, 220, 132, 0.15);
+	}
+	50% {
+		text-shadow: 0 0 18px rgba(61, 220, 132, 0.5);
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.glow-pulse {
+		animation: glow-pulse 3s ease-in-out infinite;
+	}
+}

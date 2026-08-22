@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://eirik.dalseggteppen.no/sitemap-index.xml

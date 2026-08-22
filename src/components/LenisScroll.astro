@@ -1,0 +1,18 @@
+---
+/*
+ * lenis.dev drives the real window scroll, so native `scroll` events keep
+ * firing and the scrollFx.ts reveal/parallax logic just works on top of it.
+ * `anchors: true` also takes over nav in-page jumps, respecting each
+ * section's scroll-margin-top. respectReducedMotion is on by default.
+ */
+---
+
+<script>
+	import Lenis from 'lenis';
+
+	new Lenis({
+		autoRaf: true,
+		anchors: true,
+		stopInertiaOnNavigate: true,
+	});
+</script>

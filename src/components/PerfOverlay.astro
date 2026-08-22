@@ -1,0 +1,20 @@
+---
+/* Dev-only FPS overlay. import.meta.env.DEV is statically false in a build,
+ * so this whole block gets compiled out of production entirely. */
+---
+
+{
+	import.meta.env.DEV && (
+		<script>
+			import { initPerfOverlay } from '../lib/perfOverlay';
+
+			const start = () => initPerfOverlay();
+
+			if (document.readyState === 'loading') {
+				document.addEventListener('DOMContentLoaded', start);
+			} else {
+				start();
+			}
+		</script>
+	)
+}
